@@ -1,9 +1,10 @@
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class BoxOfficeMain {
 
 	public static void main(String[] args) throws IOException {
-		MovieScraper.ScrapeByYear(2020);
+		ArrayList<ArrayList<String>> data2020 = MovieScraper.ScrapeByYear(2020);
 	}
 
 }

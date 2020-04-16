@@ -12,7 +12,11 @@ public class MovieScraper {
 	static String moneyClass = "a-text-right mojo-field-type-money";
 	static String percentClass = "a-text-right mojo-field-type-percent";
 	
-	public static void ScrapeByYear(int year) throws IOException {
+	public static ArrayList<ArrayList<String>> ScrapeByYear(int year) throws IOException {
+		if (year < 1977 || year > 2020) {
+			System.out.println("Nur Daten zwischen den Jahren 1977 und 2020 existent! ("+year+")");
+			return null;
+		}
 		String url = baseUrl+year+"/"; //die Basisseite wird mit der Jahreszahl verlängert
 		Document page = Jsoup.connect(url).userAgent("Jsoup Scraper").get(); //mit diesem Befehl wird für jsoup die Seite abgespeichert
 		
@@ -21,51 +25,45 @@ public class MovieScraper {
 		Elements moneyElements = page.getElementsByClass(moneyClass);
 		Elements percentElements = page.getElementsByClass(percentClass);
 		
-		//alle Daten der Klasse titleClass sind Filmtitel
-		ArrayList<String> movieTitle = new ArrayList<>();
-		for (Element e:titleElements) {
-			movieTitle.add(e.text());
-		}
+		//alle Elemente der Klasse titleClass sind Filmtitel
+		ArrayList<String> movieTitle = addElementFromClass(titleElements);
 		
 		//jedes dritte Element der Klasse moneyClass (beginnend mit Index 0) ist ein weltweiter Gewinn
-		ArrayList<String> movieWorldwide = new ArrayList<>();
-		for (int i = 0; i < moneyElements.size(); i+=3) {
-			Element currentElement = moneyElements.get(i);
-			movieWorldwide.add(currentElement.text());
-		}
+		ArrayList<String> moneyTotal = addElementFromClass(moneyElements, 0, 3);
 		
 		//jedes dritte Element der Klasse moneyClass (beginnend mit Index 1) ist ein inländischer Gewinn
-		ArrayList<String> movieDomestic = new ArrayList<>();
-		for (int i = 1; i < moneyElements.size(); i+=3) {
-			Element currentElement = moneyElements.get(i);
-			movieDomestic.add(currentElement.text());
-		}
+		ArrayList<String> moneyDomestic = addElementFromClass(moneyElements, 1, 3);
 		
 		//jedes dritte Element der Klasse moneyClass (beginnend mit Index 2) ist ein ausländischer Gewinn
-		ArrayList<String> movieForeign = new ArrayList<>();
-		for (int i = 2; i < moneyElements.size(); i+=3) {
-			Element currentElement = moneyElements.get(i);
-			movieForeign.add(currentElement.text());
-		}
+		ArrayList<String> moneyForeign = addElementFromClass(moneyElements, 2, 3);
 		
 		//jedes zweite Element der Klasse percentClass (beginnend mit Index 0) ist ein inländischer Gewinn in Prozent
-		ArrayList<String> movieDomesticPercent = new ArrayList<>();
-		for (int i = 0; i < percentElements.size(); i+=2) {
-			Element currentElement = percentElements.get(i);
-			movieDomesticPercent.add(currentElement.text());
-		}
+		ArrayList<String> percentDomestic = addElementFromClass(percentElements, 0, 2);
 		
 		//jedes zweite Element der Klasse percentClass (beginnend mit Index 1) ist ein ausländischer Gewinn in Prozent
-		ArrayList<String> movieForeignPercent = new ArrayList<>();
-		for (int i = 1; i < percentElements.size(); i+=2) {
-			Element currentElement = percentElements.get(i);
-			movieForeignPercent.add(currentElement.text());
-		}
+		ArrayList<String> percentForeign = addElementFromClass(percentElements, 1, 2);
 		
-		//TO-DO: Diese gescrapten Daten in eine Datenbank einbinden
-		
-		for (String s:movieTitle) {
-			System.out.println(s);
+		ArrayList<ArrayList<String>> scrapedData = new ArrayList<ArrayList<String>>();
+		scrapedData.add(movieTitle);
+		scrapedData.add(moneyTotal);
+		scrapedData.add(moneyDomestic);
+		scrapedData.add(percentDomestic);
+		scrapedData.add(moneyForeign);
+		scrapedData.add(percentForeign);
+		return scrapedData;
+	}
+	//hopsToNextElement = der Abstand zwischen 2 gesuchten Elementen
+	//Bsp: Jedes 3. Element ist gesucht: hopsToNextElement = 3
+	private static ArrayList<String> addElementFromClass (Elements e, int firstElement, int hopsToNextElement) {
+		ArrayList<String> elemArrayList = new ArrayList<>();
+		for (int i = firstElement; i < e.size(); i+=hopsToNextElement) {
+			Element currentElement = e.get(i);
+			elemArrayList.add(currentElement.text());
 		}
+		return elemArrayList;
+	}
+	//jedes Element einer Klasse wird hinzugefügt
+	private static ArrayList<String> addElementFromClass (Elements e) {
+		return addElementFromClass(e, 0, 1);
 	}
 }
