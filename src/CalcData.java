@@ -14,7 +14,8 @@ public class CalcData {
 				}
 				arrDoub[i] = Double.parseDouble(s);
 			} catch (NumberFormatException e) {
-				arrDoub[i] = 0; //"-" bedeutet 0
+				System.out.println("Nur Geld- oder Prozentwerte können gecastet werden!");
+				return null;
 			}
 		}
 		return arrDoub;
@@ -30,8 +31,8 @@ public class CalcData {
 		return sum;
 	}
 	private static String formatMoneyNumber(String s) {
-		if (s.equals("-")) { //dieser Fall wird auserhalb der Methode behandelt
-			return s;
+		if (s.equals("-")) { 
+			return "0";
 		}
 		s = s.substring(1); //entfernt $-Zeichen
 		s = s.replace(",", ""); //entfernt ,-Zeichen
@@ -39,7 +40,7 @@ public class CalcData {
 	}
 	private static String formatPercentNumber(String s) {
 		if (s.equals("-")) {
-			return s;
+			return "0";
 		}
 		s = s.replace("%", ""); //entfernt %-Zeichen
 		return s;

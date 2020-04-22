@@ -7,8 +7,10 @@ public class BoxOfficeMain {
 		ArrayList<ArrayList<String>> data2020 = MovieScraper.ScrapeByYear(2020);
 		double[] domestic2020 = CalcData.castToDoubleArray(data2020.get(2), true);
 		double[] percentDom2020 = CalcData.castToDoubleArray(data2020.get(3), false);
-		/*for (int i = 0; i < percentDom2020.length; i++) {
-			System.out.println(percentDom2020[i]);
+		/*double[] d = CalcData.castToDoubleArray(data2020.get(0), true);
+		System.out.println(d.length);*/
+		/*for (int i = 0; i < domestic2020.length; i++) {
+			System.out.println(domestic2020[i]);
 		}*/
 		/*String s = CalcData.formatMoneyNumber("$419,074,646");
 		System.out.println(s);*/
