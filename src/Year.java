@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Year {
+	int year;
 	ArrayList<String> titles;
 	double[] worldwideEarnings;
 	double[] domesticEarnings;
@@ -10,6 +11,8 @@ public class Year {
 	double[] foreignPercents;
 	
 	public Year(int year) throws IOException {
+		System.out.println("Scraping year "+year+"...");
+		this.year = year;
 		ArrayList<ArrayList<String>> data = MovieScraper.ScrapeByYear(year);
 		this.titles = data.get(0);
 		this.worldwideEarnings = CalcData.castToDoubleArray(data.get(1), true);

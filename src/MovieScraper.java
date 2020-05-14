@@ -13,8 +13,8 @@ public class MovieScraper {
 	static String percentClass = "a-text-right mojo-field-type-percent";
 	
 	public static ArrayList<ArrayList<String>> ScrapeByYear(int year) throws IOException {
-		if (year < 1977 || year > 2020) {
-			System.out.println("Nur Daten zwischen den Jahren 1977 und 2020 existent! ("+year+")");
+		if (year < 1977 || year > BoxOfficeMain.MAXYEAR) {
+			System.out.println("Nur Daten zwischen den Jahren 1977 und "+BoxOfficeMain.MAXYEAR+" existent! ("+year+")");
 			return null;
 		}
 		String url = baseUrl+year+"/"; //die Basisseite wird mit der Jahreszahl verlängert

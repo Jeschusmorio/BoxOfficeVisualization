@@ -1,27 +1,42 @@
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class BoxOfficeMain {
+	final static int MAXYEAR = 2020;
+	public static Year[] years;
 
 	public static void main(String[] args) throws IOException {
-		/*
-		ArrayList<ArrayList<String>> data2020 = MovieScraper.ScrapeByYear(2020);
-		double[] domestic2020 = CalcData.castToDoubleArray(data2020.get(2), true);
-		double[] percentDom2020 = CalcData.castToDoubleArray(data2020.get(3), false);
-		double[] d = CalcData.castToDoubleArray(data2020.get(0), true);
-		System.out.println(d.length);
-		for (int i = 0; i < domestic2020.length; i++) {
-			System.out.println(domestic2020[i]);
+		Year[] y = getYears(2018); //Startjahr als Parameter übergebbar
+		if (y != null) {
+			years = y;
+			System.out.println("\nFINISHED SCRAPING -- SHOWING RESULTS");
+			Visualization.visualize(args);
 		}
-		String s = CalcData.formatMoneyNumber("$419,074,646");
-		System.out.println(s);
-		String s = CalcData.formatPercentNumber("48.8%");
-		System.out.println(s);
-		double[] test = {10.8, 20.3, 14.2};
-		System.out.println(CalcData.sum(test));
-		System.out.println(CalcData.avg(test));
-		*/
-		Year y2020 = new Year(2020);
+	}
+	public static Year[] getYears() throws IOException {
+		return getYears(1977);
+	}
+	public static Year[] getYears(int startYear) throws IOException {
+		if (startYear < 1977 || startYear > MAXYEAR) {
+			System.out.println("Nur Daten zwischen den Jahren 1977 und 2020 existent! ("+startYear+")");
+			return null;
+		}
+		Year[] allYears = new Year[MAXYEAR - startYear + 1];
+		int year = startYear;
+		for (int i = 0; i < allYears.length; i++) {
+			Year nextYear = new Year(year);
+			allYears[i] = nextYear;
+			year++;
+		}
+		return allYears;
+	}
+	public static int getIndexByYear(int y, Year[] allYears) {
+		for (int i = 0; i < allYears.length; i++) {
+			if (allYears[i].year == y) {
+				return i;
+			}
+		}
+		System.out.println("Das gesuchte Jahr ist nicht enthalten! (" + y + ")");
+		return -1;
 	}
 
 }

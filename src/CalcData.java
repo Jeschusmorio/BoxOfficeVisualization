@@ -14,7 +14,7 @@ public class CalcData {
 				}
 				arrDoub[i] = Double.parseDouble(s);
 			} catch (NumberFormatException e) {
-				System.out.println("Nur Geld- oder Prozentwerte können gecastet werden!");
+				System.out.println("Nur Geld- oder Prozentwerte können gecastet werden! (" + arrStr.get(i) + ")");
 				return null;
 			}
 		}
@@ -42,6 +42,7 @@ public class CalcData {
 		if (s.equals("-")) {
 			return "0";
 		}
+		s = s.replace("<", ""); //entfertn <-Zeichen
 		s = s.replace("%", ""); //entfernt %-Zeichen
 		return s;
 	}
