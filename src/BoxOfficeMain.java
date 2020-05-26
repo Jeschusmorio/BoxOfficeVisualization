@@ -2,10 +2,11 @@ import java.io.IOException;
 
 public class BoxOfficeMain {
 	final static int MAXYEAR = 2020;
+	static int STARTYEAR;
 	public static Year[] years;
 
 	public static void main(String[] args) throws IOException {
-		Year[] y = getYears(2018); //Startjahr als Parameter übergebbar
+		Year[] y = getYears(); //Startjahr als Parameter übergebbar
 		if (y != null) {
 			years = y;
 			System.out.println("\nFINISHED SCRAPING -- SHOWING RESULTS");
@@ -17,9 +18,10 @@ public class BoxOfficeMain {
 	}
 	public static Year[] getYears(int startYear) throws IOException {
 		if (startYear < 1977 || startYear > MAXYEAR) {
-			System.out.println("Nur Daten zwischen den Jahren 1977 und 2020 existent! ("+startYear+")");
+			System.out.println("Nur Daten zwischen den Jahren 1977 und "+MAXYEAR+" existent! ("+startYear+")");
 			return null;
 		}
+		STARTYEAR = startYear;
 		Year[] allYears = new Year[MAXYEAR - startYear + 1];
 		int year = startYear;
 		for (int i = 0; i < allYears.length; i++) {

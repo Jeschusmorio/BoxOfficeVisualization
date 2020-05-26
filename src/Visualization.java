@@ -18,7 +18,7 @@ public class Visualization extends Application {
         FlowPane root = new FlowPane();
         root.getChildren().addAll(lc1, lc2);
         
-        Scene scene = new Scene(root, 800, 600);
+        Scene scene = new Scene(root, 1050, 400);
         
         primaryStage.setTitle("BoxOffice");
         primaryStage.setScene(scene);
@@ -33,7 +33,7 @@ public class Visualization extends Application {
 	    final LineChart<String,Number> lineChart = 
                 new LineChart<String,Number>(xAxis,yAxis);
 
-	    lineChart.setTitle("BoxOffice "+title+" revenue 1977-"+BoxOfficeMain.MAXYEAR+" [$]");
+	    lineChart.setTitle("BoxOffice "+title+" revenue "+BoxOfficeMain.STARTYEAR+"-"+BoxOfficeMain.MAXYEAR+" [$]");
 	    //defining a series
 	    XYChart.Series<String, Number> series = new LineChart.Series<>();
 	    series.setName(title);
