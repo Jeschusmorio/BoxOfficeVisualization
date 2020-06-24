@@ -9,7 +9,8 @@ import javafx.stage.Stage;
  
 public class Visualization extends Application {
 	
-	@Override public void start(Stage primaryStage) {
+	@Override 
+	public void start(Stage primaryStage) {
         Year[] years = BoxOfficeMain.years;
         
         LineChart<String, Number> lc1 = createLineChart(years, "Total");
